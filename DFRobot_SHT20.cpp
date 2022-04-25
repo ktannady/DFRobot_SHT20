@@ -18,9 +18,10 @@ DFRobot_SHT20::DFRobot_SHT20(TwoWire *pWire, uint8_t sht20Addr)
   _pWire = pWire;
 }
 
-void DFRobot_SHT20::initSHT20(byte sdaPin, byte sclPin)
+void DFRobot_SHT20::initSHT20(int sdaPin, int sclPin)
 {
-  _pWire->begin(sdaPin, sclPin);
+  _pWire->setPins(sdaPin, sclPin);
+  _pWire->begin(sdaPin, sclPin, (uint32_t)100000);
 }
 
 void DFRobot_SHT20::initSHT20()
