@@ -66,6 +66,7 @@ public:
    * @return None
    */
   void initSHT20(void);
+  void initSHT20(byte sdaPin, byte sclPin);
 
   /**
    * @fn readHumidity
