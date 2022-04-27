@@ -66,21 +66,21 @@ public:
    * @return None
    */
   void initSHT20(void);
-  void initSHT20(int sdaPin, int sclPin);
+  void initSHT20(int sdaPin, int sclPin, uint32_t freq = 100000);
 
   /**
    * @fn readHumidity
    * @brief Read the measured data of air humidity
    * @return Return the measured air humidity data of float type, unit: %
    */
-  float readHumidity(void);
+  float readHumidity(bool hold);
 
   /**
    * @fn readTemperature
    * @brief Read the measured temp data
    * @return Return the measured temp data of float type, unit: C
    */
-  float readTemperature(void);
+  float readTemperature(bool hold);
 
   /**
    * @fn checkSHT20

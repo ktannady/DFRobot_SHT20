@@ -18,10 +18,9 @@ DFRobot_SHT20::DFRobot_SHT20(TwoWire *pWire, uint8_t sht20Addr)
   _pWire = pWire;
 }
 
-void DFRobot_SHT20::initSHT20(int sdaPin, int sclPin)
+void DFRobot_SHT20::initSHT20(int sdaPin, int sclPin, uint32_t freq)
 {
-  _pWire->setPins(sdaPin, sclPin);
-  _pWire->begin(sdaPin, sclPin, (uint32_t)100000);
+  _pWire->begin(sdaPin, sclPin, freq);
 }
 
 void DFRobot_SHT20::initSHT20()
@@ -29,9 +28,13 @@ void DFRobot_SHT20::initSHT20()
   _pWire->begin();
 }
 
-float DFRobot_SHT20::readHumidity(void)
+float DFRobot_SHT20::readHumidity(bool hold)
 {
-  uint16_t rawHumidity = readValue(TRIGGER_HUMD_MEASURE_NOHOLD);
+  uint16_t rawHumidity = 0;
+  if (hold)
+    rawHumidity = readValue(TRIGGER_HUMD_MEASURE_HOLD);
+  else
+    rawHumidity = readValue(TRIGGER_HUMD_MEASURE_NOHOLD);
   if (rawHumidity == ERROR_I2C_TIMEOUT || rawHumidity == ERROR_BAD_CRC)
   {
     return (rawHumidity);
@@ -41,9 +44,13 @@ float DFRobot_SHT20::readHumidity(void)
   return (rh);
 }
 
-float DFRobot_SHT20::readTemperature(void)
+float DFRobot_SHT20::readTemperature(bool hold)
 {
-  uint16_t rawTemperature = readValue(TRIGGER_TEMP_MEASURE_NOHOLD);
+  uint16_t rawTemperature = 0;
+  if(hold)
+    rawTemperature = readValue(TRIGGER_TEMP_MEASURE_HOLD);
+  else
+    rawTemperature = readValue(TRIGGER_TEMP_MEASURE_NOHOLD);
   if (rawTemperature == ERROR_I2C_TIMEOUT || rawTemperature == ERROR_BAD_CRC)
   {
     return (rawTemperature);
